@@ -1,13 +1,15 @@
+**Русский** | [English](README.en.md)
+
 # happ-nix
 
-Nix flake that packages [Happ](https://github.com/Happ-proxy/happ-desktop) — a
-proxy client powered by Xray (VLESS/VMess/Trojan/Shadowsocks) — and provides a
-NixOS module for it.
+Nix-флейк с пакетом [Happ](https://github.com/Happ-proxy/happ-desktop) —
+прокси-клиента на базе Xray (VLESS/VMess/Trojan/Shadowsocks) — и NixOS-модулем
+для него.
 
-The package repacks the official Linux `.deb` release with its bundled Qt
-libraries. It is not affiliated with the Happ project.
+Пакет распаковывает официальный Linux `.deb` с bundled Qt. Репозиторий не
+связан с проектом Happ.
 
-## NixOS module
+## NixOS-модуль
 
 ```nix
 {
@@ -31,50 +33,78 @@ libraries. It is not affiliated with the Happ project.
 }
 ```
 
-The module installs Happ, creates the root `happd` service and the
-`/var/lib/dbus/machine-id` symlink used for the HWID.
+Модуль устанавливает Happ, создаёт root-сервис `happd` и симлинк
+`/var/lib/dbus/machine-id`, который нужен для HWID.
 
-### Options
+### Опции
 
-| Option | Default | Description |
+| Опция | По умолчанию | Описание |
 | --- | --- | --- |
-| `services.happ.enable` | `false` | Install Happ and the `happd` service. |
-| `services.happ.package` | built from `happ.nix` | Happ package to use. |
-| `services.happ.forceXwayland` | `false` | Build with `QT_QPA_PLATFORM=xcb`, no Wayland plugins. |
-| `services.happ.forceSoftwareRendering` | `false` | Build with software Qt/OpenGL rendering. |
-| `services.happ.tunMode.enable` | `false` | Enable TUN support (`tun` module, loose `rp_filter`, trusted interface). |
-| `services.happ.tunMode.interface` | `"tun0"` | TUN interface name. |
+| `services.happ.enable` | `false` | Установить Happ и сервис `happd`. |
+| `services.happ.package` | сборка из `happ.nix` | Используемый пакет Happ. |
+| `services.happ.forceXwayland` | `false` | Сборка с `QT_QPA_PLATFORM=xcb`, без Wayland-плагинов. |
+| `services.happ.forceSoftwareRendering` | `false` | Сборка с software-рендерингом Qt/OpenGL. |
+| `services.happ.tunMode.enable` | `false` | Поддержка TUN (модуль `tun`, loose reverse-path filter, trusted interface). |
+| `services.happ.tunMode.interface` | `"tun0"` | Имя TUN-интерфейса. |
 
-`forceXwayland` and `forceSoftwareRendering` only affect the default package;
-they are ignored when `services.happ.package` is overridden.
+`forceXwayland` и `forceSoftwareRendering` влияют только на пакет по
+умолчанию; при переопределении `services.happ.package` они игнорируются.
 
-Only one `happd` can run at a time: it owns port-independent resources
-`/tmp/happd.sock` and the TUN interface, so do not configure a second instance.
+Одновременно может работать только один `happd`: он занимает `/tmp/happd.sock`
+и TUN-интерфейс, поэтому второй экземпляр настраивать нельзя.
 
-## Package without NixOS
+## Пакет без NixOS
 
 ```sh
 nix build github:MaximRock/happ-nix
 ./result/bin/happ
 ```
 
-## Updates
+## Обновления
 
-The package pins the official `.deb` by version and SRI hash. A weekly GitHub
-Action runs `scripts/update.sh`, builds the result and opens a pull request.
+Пакет фиксирует официальный `.deb` по версии и SRI-хешу. Еженедельный GitHub
+Action запускает `scripts/update.sh`, собирает результат и открывает pull
+request.
 
-To update an existing flake input:
+Обновление существующего input'а:
 
 ```sh
 nix flake update happ-nix
 ```
 
-Then rebuild your system. If the upstream `.deb` layout changes, the package
-build fails instead of silently producing a broken wrapper.
+Затем пересоберите систему. Если upstream изменит layout `.deb`, сборка
+упадёт, а не создаст молча сломанный wrapper.
 
-## License
+## Благодарности
 
-The packaging code and NixOS module are licensed under GPL-3.0 (see
-[LICENSE](LICENSE)). The bundled Happ binaries are proprietary software
-distributed by the Happ project; this repository only repackages the official
-release.
+Проект вдохновлён [MrShitFox/happ-nixos](https://github.com/MrShitFox/happ-nixos)
+— неофициальным NixOS-модулем Happ от MrShitFox. Спасибо автору за проделанную
+работу и ключевые находки, которые помогли запустить Happ:
+
+- **HWID:** Happ читает идентификатор через `/var/lib/dbus/machine-id`, но
+  dbus-broker не создаёт этот файл, поэтому без симлинка на `/etc/machine-id`
+  HWID остаётся пустым.
+- **Wayland/wlroots:** bundled Qt6 Wayland-плагины могут молча ронять клиент;
+  `forceXwayland` (`QT_QPA_PLATFORM=xcb` и удаление Wayland-плагинов) обходит
+  это.
+- **TUN:** loose reverse-path filter, trusted-интерфейс и root-сервис `happd`
+  для запуска ядер.
+
+Это независимый flake, а не форк `happ-nixos`. Отличия:
+
+- `happ-nix` — самостоятельный flake с `nixosModules.default` и
+  `nixpkgs.follows`; `happ-nixos` подключается клонированием в `/etc/nixos` и
+  импортом `happ-module.nix`.
+- Happ запускается напрямую из `/nix/store` (`$out/bin/happ`, `$out/bin/happd`),
+  без материализации в `/opt/happ`.
+- TUN-режим включается отдельной опцией `services.happ.tunMode.enable`, имя
+  интерфейса задаёт `services.happ.tunMode.interface` (в `happ-nixos` —
+  `tunInterface`, а TUN-настройки активны всегда при `services.happ.enable`).
+- Есть `packages`/`overlay`/`checks`, CI и еженедельный workflow обновления с
+  PR; в `happ-nixos` обновление выполняется через `git pull` и пересборку.
+
+## Лицензия
+
+Код упаковки и NixOS-модуль распространяются под GPL-3.0 (см.
+[LICENSE](LICENSE)). Бинарники Happ — проприетарное ПО проекта Happ; этот
+репозиторий лишь переупаковывает официальный релиз.
