@@ -133,7 +133,7 @@ yamllint чистый. README.md, README.ru.md, LICENSE GPL-3.0 добавлен
 
 ---
 
-## Этап 3. Публикация
+## Этап 3. Публикация — выполнено
 
 - Показать сообщение коммита и запросить подтверждение.
 - Создать начальный коммит.
@@ -146,6 +146,10 @@ gh repo create MaximRock/happ-nix --public --source=. --remote=origin --push
 - Дождаться зелёного CI.
 
 **Gate:** репозиторий опубликован, CI зелёный. Старый Happ на хосте не тронут.
+
+**Статус:** начальный коммит `a77e9a4`; репозиторий
+https://github.com/MaximRock/happ-nix опубликован (`--public`, remote `origin`);
+CI run `43897912746` — success. Dotfiles и старый `happd` не тронуты.
 
 ---
 
