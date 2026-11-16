@@ -153,7 +153,7 @@ CI run `43897912746` — success. Dotfiles и старый `happd` не трон
 
 ---
 
-## Этап 4. VM smoke-тест
+## Этап 4. VM smoke-тест — выполнено
 
 - Минимальная NixOS VM с новым модулем из опубликованного `happ-nix`.
 - `nixpkgs` 26.05, как в dotfiles.
@@ -174,6 +174,15 @@ VM не проверяет реальную подписку/HWID, настоя�
 Это проверяется после cutover.
 
 **Gate:** VM прошла. Только после этого трогать dotfiles.
+
+**Статус:** `nixosTest` `happ-vm-smoke` (VM-флейк в `/tmp/opencode/happ-vm-test`)
+— passed. Nixpkgs `7dcdd87` (26.05), опубликованный `happ-nix` `784d595`,
+Xvfb + Mesa llvmpipe. `happd` active (root) и `/tmp/happd.sock`; окно
+«Happ 4.7.2 (341)» 1000x640; desktop/icon; HWID-симлинк; `tun` и
+`/dev/net/tun`; rpfilter `--loose` и trusted `tun0`; wrapper
+`QT_QPA_PLATFORM=xcb`, runtime PATH и `SSL_CERT_FILE`; missing libs нет.
+Реальная подписка/HWID, TUN-трафик, Niri/Wayland и GPU не проверялись.
+Dotfiles и старый `happd` не тронуты.
 
 ---
 

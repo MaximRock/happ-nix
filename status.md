@@ -2,7 +2,7 @@
 
 Обновлено: 2026-11-16. Источник: [PLAN.md](PLAN.md).
 
-**Выполнено: этапы 0–3 из 0–7.**
+**Выполнено: этапы 0–4 из 0–7.**
 
 ## Обзор
 
@@ -10,7 +10,7 @@
 - [x] Этап 1. Репозиторий и пакет
 - [x] Этап 2. NixOS-модуль, CI и обновления
 - [x] Этап 3. Публикация
-- [ ] Этап 4. VM smoke-тест
+- [x] Этап 4. VM smoke-тест
 - [ ] Этап 5. Staging dotfiles без switch
 - [ ] Этап 6. Cutover
 - [ ] Этап 7. Cleanup и проверка на хосте
@@ -98,22 +98,25 @@ gh repo create MaximRock/happ-nix --public --source=. --remote=origin --push
 
 ---
 
-## Этап 4. VM smoke-тест
+## Этап 4. VM smoke-тест — выполнено
 
-- [ ] Этап завершён (gate пройден).
-- [ ] Минимальная NixOS VM с новым модулем из опубликованного `happ-nix`.
-- [ ] `nixpkgs` 26.05, как в dotfiles.
-- [ ] `services.happ.enable = true`, `tunMode.enable = true`, `forceXwayland = true`.
-- [ ] X11/Xvfb для GUI.
-- [ ] Без sops, GPU и полного host-конфига.
-- [ ] Проверить: `happd` active и `/tmp/happd.sock`.
-- [ ] Проверить: запуск `happ` и окно под X11/Xvfb.
-- [ ] Проверить: desktop и иконку.
-- [ ] Проверить: symlink `machine-id`.
-- [ ] Проверить: `tun`, `rp_filter`, trusted interface.
-- [ ] Проверить: `QT_QPA_PLATFORM=xcb` и PATH/wrapper.
-- [ ] Проверить: отсутствие missing libs.
-- [ ] Gate: VM прошла. Только после этого трогать dotfiles.
+- [x] Этап завершён (gate пройден).
+- [x] Минимальная NixOS VM с новым модулем из опубликованного `happ-nix` (`784d595`).
+- [x] `nixpkgs` 26.05, как в dotfiles (`7dcdd87`).
+- [x] `services.happ.enable = true`, `tunMode.enable = true`, `forceXwayland = true`.
+- [x] X11/Xvfb для GUI (Xvfb + Mesa llvmpipe).
+- [x] Без sops, GPU и полного host-конфига.
+- [x] Проверить: `happd` active (root) и `/tmp/happd.sock`.
+- [x] Проверить: запуск `happ` и окно под X11/Xvfb — «Happ 4.7.2 (341)», 1000x640.
+- [x] Проверить: desktop и иконку.
+- [x] Проверить: symlink `machine-id` → `/etc/machine-id`.
+- [x] Проверить: `tun`/`/dev/net/tun`, rpfilter `--loose`, trusted `tun0`.
+- [x] Проверить: `QT_QPA_PLATFORM=xcb` и PATH/wrapper.
+- [x] Проверить: отсутствие missing libs (`ldd` для `Happ` и `happd`).
+- [x] Gate: VM прошла. Только после этого трогать dotfiles.
+
+Тест: `/tmp/opencode/happ-vm-test` (`nixosTest` `happ-vm-smoke`) — passed.
+GUI-клиент подключился к `happd` (client/daemon version `4.7.2`).
 
 ---
 
