@@ -55,11 +55,11 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "happ";
-  version = "4.7.2";
+  version = "4.8.1";
 
   src = fetchurl {
     url = "https://github.com/Happ-proxy/happ-desktop/releases/download/${version}/Happ.linux.x64.deb";
-    hash = "sha256-hRQPLKB98Lol0C1IKkj2UjdQkxxH/CS6O+bclwK5KfQ=";
+    hash = "sha256-sw/aNBfqRn0KkLGrQu7BDk+hbzYel0yzzmQAyVnC84w=";
   };
 
   nativeBuildInputs = [
