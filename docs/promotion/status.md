@@ -3,7 +3,7 @@
 - Plan: [PLAN.md](PLAN.md)
 - Started: 2026-11-17
 - Last updated: 2026-11-17
-- Current stage: 1 — awaiting command
+- Current stage: 1 — metadata done; pinning pending (manual)
 
 ## 0. Scaffolding — complete
 
@@ -12,15 +12,17 @@
 - [x] Create `docs/promotion/status.md`
 - [x] Verify docs files are tracked and not ignored
 - [x] Commit and push docs scaffolding
-  - commit: `docs: add promotion plan and status tracker`
+  - commit: `da86459` (`docs: add promotion plan and status tracker`)
   - date: 2026-11-17
 
-## 1. GitHub metadata — not started
+## 1. GitHub metadata — in progress (manual pin pending)
 
-- [ ] Set repository description
-- [ ] Add topics
-- [ ] Verify About section via `gh repo view`
-- [ ] Pin repository in the profile (manual/API)
+- [x] Set repository description
+- [x] Add topics (17)
+- [x] Verify About section via `gh repo view`
+- [ ] Pin repository in the profile
+  - manual: GitHub does not expose a public GraphQL mutation for pinning repositories
+  - path: profile → Customize your pins → select `happ-nix` → Save
 - [ ] Mark stage complete
 
 ## 2. Assets — not started
