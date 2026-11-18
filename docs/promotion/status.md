@@ -2,8 +2,8 @@
 
 - Plan: [PLAN.md](PLAN.md)
 - Started: 2026-11-17
-- Last updated: 2026-11-17
-- Current stage: 2 — awaiting command
+- Last updated: 2026-11-18
+- Current stage: 3 — awaiting command
 
 ## 0. Scaffolding — complete
 
@@ -25,15 +25,20 @@
   - verified via GraphQL `viewer.pinnedItems` on 2026-11-17
 - [x] Mark stage complete
 
-## 2. Assets — not started
+## 2. Assets — complete
 
-- [ ] Capture Happ screenshot with demo/sanitized data
-- [ ] Hide or blur subscriptions, servers, email, HWID, tokens
-- [ ] Get user approval for the screenshot
-- [ ] Create social preview 1280x640
-- [ ] Strip metadata and optimize images
-- [ ] Save `assets/happ-nixos.png` and `assets/social-preview.png`
-- [ ] Mark stage complete
+- [x] Capture Happ screenshot with demo/sanitized data
+  - demo servers only: Amsterdam, Frankfurt, Tokyo, Singapore, New York
+- [x] Hide or blur subscriptions, servers, email, HWID, tokens
+  - no real subscriptions; title bar with version cropped
+- [x] Get user approval for the screenshot
+  - approved 2026-11-18
+- [x] Create social preview 1280x640
+- [x] Strip metadata and optimize images
+- [x] Save `assets/happ-nixos.png` and `assets/social-preview.png`
+  - `happ-nixos.png`: 1002x1011, 173K
+  - `social-preview.png`: 1280x640, 200K
+- [x] Mark stage complete
 
 ## 3. Release 4.7.2 — not started
 
