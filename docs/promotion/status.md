@@ -3,7 +3,7 @@
 - Plan: [PLAN.md](PLAN.md)
 - Started: 2026-11-17
 - Last updated: 2026-11-18
-- Current stage: 3 — awaiting command
+- Current stage: 4 — awaiting command
 
 ## 0. Scaffolding — complete
 
@@ -40,13 +40,15 @@
   - `social-preview.png`: 1280x640, 200K
 - [x] Mark stage complete
 
-## 3. Release 4.7.2 — not started
+## 3. Release 4.7.2 — complete
 
-- [ ] Prepare release notes
-- [ ] Create GitHub release from tag `happ-4.7.2`
-- [ ] Verify release notes and links
-- [ ] Confirm release is marked Latest
-- [ ] Mark stage complete
+- [x] Prepare release notes
+- [x] Create GitHub release from tag `happ-4.7.2`
+- [x] Verify release notes and links
+- [x] Confirm release is marked Latest
+  - https://github.com/MaximRock/happ-nix/releases/tag/happ-4.7.2
+  - verified via `gh api repos/MaximRock/happ-nix/releases/latest`
+- [x] Mark stage complete
 
 ## 4. README — not started
 
